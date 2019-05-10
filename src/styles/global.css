@@ -1,0 +1,21 @@
+.username-icon{
+    display: inline-block;
+    vertical-align: middle;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    margin-right: .5rem;
+    border-radius: 50%;
+    text-align: center;
+    background: #3296fa;
+    color: #fff;
+    font-size: .8rem;
+}
+
+.mint-popup-right{
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* transform: none; */
+    transform: translate3d(0,0, 0);
+}

@@ -27,6 +27,7 @@
           <Checked :checked="selectList.includes(item.userName)"/>
           <p class="label">{{item.userName}}</p>
         </li>
+        <li v-show="searchValue && filterSelectedList.length === 0" class="no-data"> 暂无符合条件的用户</li>
       </ul>
     </ListWrapper>
     <div class="fixed-tool">
@@ -166,6 +167,10 @@ export default {
     margin-left: 10px;
     border-bottom: 1px solid #f4f4f4;
   }
+}
+.no-data{
+  padding: 15px;
+  text-align: center;
 }
 .fixed-tool {
   position: fixed;

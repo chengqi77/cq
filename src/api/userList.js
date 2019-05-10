@@ -5,7 +5,7 @@ import request from '../utils/request'
 const getUserList = (params) => {
     return request({
       method: 'get',
-      url: '/user/getUserList',
+      url: 'http://192.168.1.7:8082/out-user-sys-background/user/getUserList',
       params: params
     })
 }

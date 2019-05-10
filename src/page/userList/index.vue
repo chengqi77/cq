@@ -82,9 +82,7 @@ export default {
     },
     submit() {
       this.$store.commit("setSelectedUseList", this.selectList);
-      this.$router.push({
-        path: ""
-      });
+      this.$router.back();
     },
     toggleAllChecked() {
       if (this.isAllChecked) {

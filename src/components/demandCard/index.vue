@@ -4,22 +4,31 @@
             <input type="text" class="ser" placeholder="搜索需求单" @click="onchange">
         </div>
         <div>
-            <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange">
+            <mt-spinner type="snake" v-show="data.status === 'loading'"></mt-spinner>
+            <mt-loadmore v-show="data.status === 'success'" :top-method="loadTop" @top-status-change="handleTopChange">
                 <ul>
-                    <li v-for="item in list" @click="details(item)">
+                    <li v-for="item in data.list" @click="details(item)" :key="item.id">
                         <div class="Cardbox">
-                            <p class="title">需求编号：232323</p>
+                            <p class="title">需求编号：{{item.serialNumber}}</p>
                             <div class="creatorDeptName">
-                                <div class="logo">李山</div>
+                                <div class="logo">{{item.creatorName || 'Unkonw'}}</div>
                                 <div class="userpre">
-                                    <p>**de需求单de需求单de需求单de需求单de需求单de需求单de需求单de需求单de需求单de需求单de需求单de需求单de需求单</p>
-                                    <p>**项目组</p>
-                                    <p class="time">**时间</p>
+                                    <p>{{item.creatorName|| 'Unkonw'}}的需求单</p>
+                                    <p>{{item.creatorDeptName|| 'Unkonw'}}</p>
+                                    <p class="time">{{item.createTimeStr}}</p>
                                 </div>
                             </div>
-                            <div v-for="item in card" class="carddea">
+                            <div class="carddea">
                                 <span>业务单位/部门:</span>
-                                <span class="content">你好你好你好你好你好你好你好你好你好你好你好你好你好你好</span>
+                                <span class="content" v-html="item.deptName"></span>
+                            </div>
+                            <div class="carddea">
+                                <span>沟通内推:</span>
+                                <span class="content">{{item.linkUpContent}}</span>
+                            </div>
+                            <div class="carddea">
+                                <span>是否分派:</span>
+                                <span class="content">{{item.isDispatch ? '是':'否'}}</span>
                             </div>
                         </div>
 
@@ -34,8 +43,9 @@
     </div>
 </template>
 <script>
-    import { Loadmore } from 'mint-ui';
+    import { Loadmore, } from 'mint-ui';
     export default {
+        props:['data'],
         data() {
             return {
                 topStatus: '',

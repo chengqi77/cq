@@ -30,7 +30,7 @@ export const fetch = (url, params = {}) => {
 
 export const post = (url, data = {}) => {
     return new Promise((resolve, reject) => {
-        const paramsUrl =  `${url}${qs.stringify(data)}`
+        const paramsUrl =  `${url}?${qs.stringify(data)}`
         axios
             .post(
                 paramsUrl,

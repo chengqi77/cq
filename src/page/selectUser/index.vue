@@ -204,6 +204,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '../../styles/global.css';
+@import '../../styles/main.css';
 .user-list {
   min-width: 100vw;
   min-height: 100vh;

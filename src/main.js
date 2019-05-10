@@ -4,8 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Mint from 'mint-ui'
-import './styles/global.css' // global css
-import './styles/main.css'
+
 import 'mint-ui/lib/style.css' // mint-ui css
 
 Vue.use(Mint);

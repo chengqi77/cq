@@ -40,19 +40,20 @@
         <div style="margin-top:10px;"></div>
         <div class="formgroups">
             <label for="">
-                <span>*</span>
+                <span style="color:red;padding-right: 5px;">*</span>
                 是否需要分派
             </label>
             <mt-switch v-model="assignswitch"></mt-switch>
         </div>
         <div class="save">
-            <mt-button type="primary">提交</mt-button>
+            <mt-button type="primary" @click="Save">提交</mt-button>
         </div>
     </div>
 </template>
 <script>
     import Vue from 'vue'
-    import { Header, Switch, Button } from 'mint-ui';
+    import { demandCardSave } from "@/service/getData.js"
+    import { Header, Switch, Button, Toast } from 'mint-ui';
     import textareaFeed from '@/components/textareaFeed/index'
     Vue.component(Button.name, Button);
     Vue.component(Switch.name, Switch);
@@ -66,7 +67,45 @@
                 name: 'name',
                 phone: "phone",
                 assignswitch: false,
-                selected: '外卖'
+                selected: '外卖',
+                sta: ''
+            }
+        },
+        methods: {
+            Trim(str) {  //str表示要转换的字符串
+                console.log(str, 'str')
+                if (str == undefined) {
+                    this.sta = 0
+                }
+                else {
+                    this.sta = 1
+                    return String(str).replace(/\n|\r\n/g, "<br/>");
+                }
+            },
+
+            Save() {
+
+                let subObj = {
+                    deptName: this.Trim(this.$refs.branch.texts),
+                    userName: this.Trim(this.$refs.name.texts),
+                    tel: this.Trim(this.$refs.phone.texts),
+                    linkUpMethod: this.Trim(this.$refs.Way.texts),
+                    linkUpContent: this.Trim(this.$refs.Waycon.texts),
+                    isDispatch: this.assignswitch ? 1 : 0,
+                }
+              
+                if (this.sta === 0 ) {
+                    Toast("请完成必填(*)输入")
+                }
+                else {
+                    demandCardSave(subObj).then(res => {
+                        if (res.success === true) {
+                            this.$router.push({ path: '/?1' })
+                        }
+                        console.log(res, '--')
+                    })
+                }
+                // console.log(subObj,'--',this.$refs.name.texts)
             }
         },
         components: {

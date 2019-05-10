@@ -11,9 +11,13 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    
     {
       path: '/',
+      name: '录入需求单',
+      component: RecordDemand,
+    },
+    {
+      path: '/RecordDemand',
       name: '录入需求单',
       component: RecordDemand,
     },

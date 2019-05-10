@@ -1,27 +1,40 @@
 <template>
     <div class="details">
-        <mt-header title="需求单详情">
+        <!-- <mt-header title="需求单详情">
             <router-link to="/?1" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-        </mt-header>
+        </mt-header> -->
         <div class="detailsBox">
-            <p class="title">需求编号：232323</p>
+            <p class="title">需求编号：{{demand.serialNumber}}</p>
             <div class="creatorDeptName">
-                <div class="logo">李山</div>
+                <div class="logo">{{demand.userName}}</div>
                 <div class="userpre">
-                    <p>**de需求单de需</p>
-                    <p>**项目组</p>
-                    <p class="time">**时间</p>
+                    <p>{{demand.userName}}的需求单</p>
+                    <p class="time">{{demand.createTimeStr}}</p>
                 </div>
             </div>
-            <div v-for="item in card" class="carddeaList">
+            <div  class="carddeaList">
                 <p class="title">业务单位/部门</p>
-                <p class="content" v-html="contents"></p>
+                <p class="content" v-html="demand.deptName"></p>
+            </div>
+            <div  class="carddeaList">
+                <p class="title">人员名称</p>
+                <p class="content" v-html="demand.userName"></p>
+            </div>
+            <div  class="carddeaList">
+                <p class="title">联系电话</p>
+                <p class="content" v-html="demand.tel"></p>
+            </div><div  class="carddeaList">
+                <p class="title">沟通方式</p>
+                <p class="content" v-html="demand.linkUpMethod"></p>
+            </div><div  class="carddeaList">
+                <p class="title">沟通内容</p>
+                <p class="content" v-html="demand.linkUpContent"></p>
             </div>
             <div class="fp">
                 <p>是否需要分派</p>
-                <mt-switch v-model="value"></mt-switch>
+                <mt-switch v-model="demand.isDispatch ? true : false"></mt-switch>
             </div>
         </div>
     </div>
@@ -29,9 +42,9 @@
 <style lang="less">
     .details {
         .mint-header {
-     background-color: #ffffff !important;
-    color: #3e3e3e !important;
-}
+            background-color: #ffffff !important;
+            color: #3e3e3e !important;
+        }
         .fp {
             display: flex;
             justify-content: space-between;
@@ -79,9 +92,9 @@
                     margin: 0px;
                     padding: 0px;
                 }
-                .content{
+                .content {
                     font-size: 13px;
-                    padding: 10px 0;
+                    padding: 2px 0;
                 }
             }
         }
@@ -89,25 +102,42 @@
 </style>
 <script>
     import { Header } from 'mint-ui';
+    import {getById } from "@/service/getData.js"
     export default {
         data() {
             return {
-                contents: " 12312<br/>121<br/>",
+               
                 topStatus: '',
-                list: [
-                    {
-                        P: '11'
+                demand:{
+                        serialNumber: '',
+                        creatorName:'',
+                        deptName:'',
+                        userName:'',
+                        tel:'',
+                        linkUpMethod:'',
+                        isDispatch:false,
                     }
-                ],
+                ,
                 card: [{
                     P: '11'
                 }],
-                value:true,
+                isDispatch: true,
             }
         },
+        created() {
+            this.getdata()
+        },
         methods: {
-            exi(){
-                this.$router.push({ path:'/?id=1'})
+            getdata(){
+                let id = this.$route.query.id
+                console.log(id,'+')
+                getById(id).then(res => {
+                this.demand =  res.data 
+                })
+            }
+            ,
+            exi() {
+                this.$router.push({ path: '/?id=1' })
             },
             loadTop() {
                 // 加载更多数据

@@ -93,14 +93,17 @@
                     linkUpContent: this.Trim(this.$refs.Waycon.texts),
                     isDispatch: this.assignswitch ? 1 : 0,
                 }
-              
-                if (this.sta === 0 ) {
+
+                if (this.sta === 0) {
                     Toast("请完成必填(*)输入")
                 }
                 else {
                     demandCardSave(subObj).then(res => {
                         if (res.success === true) {
-                            this.$router.push({ path: '/?1' })
+                            this.$router.push({ path: '/demandList' })
+                        }
+                        else{
+                            Toast("请优化表单重新提交")
                         }
                         console.log(res, '--')
                     })

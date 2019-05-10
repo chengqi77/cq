@@ -1,7 +1,7 @@
 <template>
     <div class="search">
         <div class="searchTit">
-            <mt-search v-model="number" placeholder="需求单编号">
+            <mt-search v-model="number" placeholder="需求单编号" >
                 <div class="searchcon">
                     <ul>
                         <li class="searchconTit">
@@ -18,6 +18,7 @@
 </template>
 <script>
     import { Search } from 'mint-ui';
+    import {serialNumber} from "@/service/getData.js"
     export default {
         data() {
             return {
@@ -30,7 +31,16 @@
                 ],
             }
         },
+        created() {
+            this.getserialNumber()
+        },
         methods: {
+            getserialNumber(){
+                let serialNumbers = this.number
+                serialNumber(serialNumbers).then(res=>{
+                console.log(res)
+                })
+            }
         },
         components: {
 

@@ -14,7 +14,8 @@
     >
       <ul>
         <slot name="list"></slot>
-        <li v-show="status === 'success' && list.length ===0">暂无数据</li>
+        <li v-show="status === 'success' && list.length ===0" class="no-data">暂无数据</li>
+        <li v-show="status === 'loaded'" class="no-more">没有更多了</li>
       </ul>
       <div slot="top" class="mint-loadmore-top">
         <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
@@ -32,7 +33,13 @@
 */
 import { delHtmlTag, delBrTag } from "@/utils";
 export default {
-  props: ["requestData", "onDataChange",'className'],
+  props: [
+    "requestData",
+    "onDataChange",
+    "className",
+    "allowRefresh",
+    "allowLoadmore"
+  ],
   data() {
     return {
       list: [],
@@ -67,10 +74,14 @@ export default {
   },
   methods: {
     getData(current) {
-      if (this.status === "loading") return;
+      if (["loading", "loaded"].includes(this.status)) return;
       this.status = "loading";
       this.requestData({ current })
         .then(res => {
+          if (res.length === 0) {
+            this.status = "loaded";
+            return;
+          }
           if (current === 1) {
             this.list = res;
           } else {
@@ -85,11 +96,14 @@ export default {
         });
     },
     refresh() {
-      this.getData(1);
+      if (this.allowRefresh) {
+        this.getData(1);
+      } else {
+        this.$refs.loadmore.onTopLoaded();
+      }
     },
     loadmore(...v) {
-      console.log(v, "loadmore");
-      this.getData(this.current + 1);
+      this.allowLoadmore && this.getData(this.current + 1);
     },
     handleTopChange(status) {
       this.topStatus = status;
@@ -107,6 +121,13 @@ export default {
   min-height: 200px;
   .custom-loading {
     text-align: center;
+  }
+  .no-data,
+  .no-more {
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    color: #000;
   }
 }
 </style>

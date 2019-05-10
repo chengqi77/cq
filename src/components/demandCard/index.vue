@@ -3,50 +3,43 @@
     <div>
       <input type="text" class="ser" placeholder="搜索需求单" @click="onchange">
     </div>
-    <div>
-      <div v-show="showCustomLoading" class="mint-loadmore-top custom-loading">
-        <span>加载中...</span>
-      </div>
-      <mt-loadmore
-        ref="loadmore"
-        :top-method="onRequestUpdateData"
-        @top-status-change="handleTopChange"
-        class="loadmore-box"
-      >
-        <ul>
-          <li v-for="item in data.list" @click="goDetail(item)" :key="item.id">
-            <div class="Cardbox">
-              <p class="title">需求编号：{{item.serialNumber}}</p>
-              <div class="creatorDeptName">
-                <div class="logo">{{item.userName || 'Unkonw'}}</div>
-                <div class="userpre">
-                  <p>{{item.creatorName|| 'Unkonw'}}的需求单</p>
-                  <p>{{item.creatorDeptName|| 'Unkonw'}}</p>
-                  <p class="time">{{item.createTimeStr}}</p>
-                </div>
-              </div>
-              <div class="carddea">
-                <span>业务单位/部门:</span>
-                <span class="content">{{delBrTag(item.deptName)}}</span>
-              </div>
-              <div class="carddea">
-                <span>沟通内容:</span>
-                <span class="content">{{delHtmlTag(item.linkUpContent)}}</span>
-              </div>
-              <div class="carddea">
-                <span>是否分派:</span>
-                <span class="content">{{item.isDispatch ? '是':'否'}}</span>
+    <ListWrapper
+      :requestData="getDataByCurrent"
+      :onDataChange="updateList"
+      :allowRefresh="true"
+      :allowLoadmore="true"
+      ref="listWrapper"
+      class="list"
+    >
+      <ul slot="list">
+        <li v-for="item in list" @click="goDetail(item)" :key="item.id">
+          <div class="Cardbox">
+            <p class="title">需求编号：{{item.serialNumber}}</p>
+            <div class="creatorDeptName">
+              <div class="logo">{{item.userName || 'Unkonw'}}</div>
+              <div class="userpre">
+                <p>{{item.creatorName|| 'Unkonw'}}的需求单</p>
+                <p>{{item.creatorDeptName|| 'Unkonw'}}</p>
+                <p class="time">{{item.createTimeStr}}</p>
               </div>
             </div>
-          </li>
-          <li v-show="data.status === 'success' && data.list.length ===0">暂无数据</li>
-        </ul>
-        <div slot="top" class="mint-loadmore-top">
-          <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-          <span v-show="showLoading">加载中...</span>
-        </div>
-      </mt-loadmore>
-    </div>
+            <div class="carddea">
+              <span>业务单位/部门:</span>
+              <span class="content">{{delBrTag(item.deptName)}}</span>
+            </div>
+            <div class="carddea">
+              <span>沟通内容:</span>
+              <span class="content">{{delHtmlTag(item.linkUpContent)}}</span>
+            </div>
+            <div class="carddea">
+              <span>是否分派:</span>
+              <span class="content">{{item.isDispatch ? '是':'否'}}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </ListWrapper>
+    <div></div>
   </div>
 </template>
 <script>
@@ -58,41 +51,13 @@
 */
 import { Loadmore } from "mint-ui";
 import { delHtmlTag, delBrTag } from "@/utils";
+import ListWrapper from "@/components/listWrapper.vue";
+import { getDemandList } from "@/service/getData.js";
 export default {
-  props: ["data", "onRequestUpdateData"],
   data() {
     return {
-      topStatus: "pull"
+      list: []
     };
-  },
-  watch: {
-    data(next, prev) {
-      const { status: prevStatus } = prev;
-      const { status: nextStatus } = next;
-      //如果数据状态由加载改变 则关闭下拉动画
-      if (
-        prevStatus === "loading" &&
-        ["success", "error"].includes(nextStatus)
-      ) {
-        this.$refs.loadmore.onTopLoaded();
-      }
-    }
-  },
-  computed: {
-    showCustomLoading() {
-      const {
-        data: { status },
-        topStatus
-      } = this;
-      return status === "loading" && topStatus === "pull";
-    },
-    showLoading() {
-      const {
-        data: { status },
-        topStatus
-      } = this;
-      return status === "loading" || topStatus === "loading";
-    }
   },
   methods: {
     delBrTag,
@@ -100,14 +65,26 @@ export default {
     goDetail(item) {
       this.$router.push({ path: "/DemandDetails?id=" + item.id });
     },
-    handleTopChange(status) {
-      this.topStatus = status;
+    getDataByCurrent({ current }) {
+      return getDemandList({ pageNo: current, pageSise: "10" }).then(res => {
+        const { success, data, errorMsg } = res;
+        if (success) {
+          return Promise.resolve(data || []);
+        } else {
+          return Promise.reject(errorMsg);
+        }
+      });
+    },
+    updateList(list) {
+      this.list = list;
     },
     onchange() {
       //  this.$router.push({ path:'/DemandDetails?id='+id.P})
     }
   },
-  components: {}
+  components: {
+    ListWrapper
+  }
 };
 </script>
 

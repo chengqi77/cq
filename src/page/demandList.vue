@@ -1,10 +1,7 @@
 <template>
   <div class="tab-container">
-    <ListWrapper :requestData="getDataByCurrent"/>
-    <mt-tabbar :value="selected" @input="handleChange" fixed>
-      <mt-tab-item id="recordDemand">录单</mt-tab-item>
-      <mt-tab-item id="demandList">查看</mt-tab-item>
-    </mt-tabbar>
+    <DemandCard/>
+    
   </div>
 </template>
 <script>

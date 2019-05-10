@@ -74,7 +74,10 @@ export default {
   },
   methods: {
     getData(current) {
-      if (["loading", "loaded"].includes(this.status)) return;
+      if (["loading", "loaded"].includes(this.status)){
+        this.$refs.loadmore.onTopLoaded();
+        return;
+      };
       this.status = "loading";
       this.requestData({ current })
         .then(res => {

@@ -1,7 +1,7 @@
 <template>
   <div class="demandCardList">
     <div>
-      <input type="text" class="ser" placeholder="搜索需求单" @click="onchange">
+      <input v-model="searchValue" type="text" class="ser" placeholder="搜索需求单">
     </div>
     <ListWrapper
       :requestData="getDataByCurrent"
@@ -12,7 +12,7 @@
       class="list"
     >
       <ul slot="list">
-        <li v-for="item in list" @click="goDetail(item)" :key="item.id">
+        <li v-for="item in filterSelectedList" @click="goDetail(item)" :key="item.id">
           <div class="Cardbox">
             <p class="title">需求编号：{{item.serialNumber}}</p>
             <div class="creatorDeptName">
@@ -37,6 +37,7 @@
             </div>
           </div>
         </li>
+        <li v-show="searchValue && filterSelectedList.length === 0" class="no-data">暂无符合条件的需求</li>
       </ul>
     </ListWrapper>
     <div></div>
@@ -56,6 +57,7 @@ import { getDemandList } from "@/service/getData.js";
 export default {
   data() {
     return {
+      searchValue: "",
       list: []
     };
   },
@@ -77,9 +79,14 @@ export default {
     },
     updateList(list) {
       this.list = list;
-    },
-    onchange() {
-      //  this.$router.push({ path:'/DemandDetails?id='+id.P})
+    }
+  },
+  computed: {
+    filterSelectedList() {
+      return this.list.filter(item => {
+        const { serialNumber = "" } = item;
+        return !serialNumber || serialNumber.includes(this.searchValue);
+      });
     }
   },
   components: {
@@ -89,6 +96,10 @@ export default {
 </script>
 
 <style lang="less">
+.no-data {
+  padding: 15px;
+  text-align: center;
+}
 .demandCardList {
   width: 94%;
   height: 100%;
@@ -98,6 +109,9 @@ export default {
   }
   .loadmore-box {
     min-height: 200px;
+  }
+  .list{
+    padding-bottom: 50px;
   }
   ul {
     margin: 0px;

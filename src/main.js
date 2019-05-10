@@ -12,6 +12,14 @@ Vue.use(Mint);
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.name) {
+    document.title = to.name;
+  }
+  next();
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -4,7 +4,9 @@
       <input type="text" class="ser" placeholder="搜索需求单" @click="onchange">
     </div>
     <div>
-      <mt-spinner type="snake" v-show="showCustomLoading"></mt-spinner>
+        <div v-show="showCustomLoading" class="mint-loadmore-top custom-loading">
+          <span>加载中...</span>
+        </div>
       <mt-loadmore
         ref="loadmore"
         :top-method="onRequestUpdateData"
@@ -37,11 +39,13 @@
               </div>
             </div>
           </li>
-          <li v-show="data.list.length ===0 && data.status === 'success'">暂无数据</li>
+          <li v-show="data.status === 'success' && data.list.length ===0">暂无数据</li>
         </ul>
         <div slot="top" class="mint-loadmore-top">
-          <mt-spinner v-show="showLoading"></mt-spinner>
+          <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
+          <span v-show="showLoading">加载中...</span>
         </div>
+        
       </mt-loadmore>
     </div>
   </div>
@@ -95,7 +99,6 @@ export default {
       this.$router.push({ path: "/DemandDetails?id=" + id.P });
     },
     handleTopChange(status) {
-      console.log(status, "status");
       this.topStatus = status;
     },
     onchange() {
@@ -111,6 +114,9 @@ export default {
   width: 94%;
   height: 100%;
   margin: 0px auto;
+  .custom-loading{
+      margin-top: 20px;
+  }
   .loadmore-box {
     min-height: 200px;
   }

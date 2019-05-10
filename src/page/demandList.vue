@@ -38,12 +38,10 @@ export default {
       this.damandList.status = "loading";
       getDemandList()
         .then(res => {
-          setTimeout(() => {
-            this.damandList = {
+          this.damandList = {
               status: "success",
               list: res.data
             };
-          }, 1000);
         })
         .catch(e => {
           console.log(e, "e");

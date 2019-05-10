@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="tab-container">
     <Field></Field>
-    <mt-tabbar value="selected" @input="handleChange" fixed>
+    <mt-tabbar :value="selected" @input="handleChange" fixed>
       <mt-tab-item id="recordDemand">录单</mt-tab-item>
       <mt-tab-item id="demandList">查看</mt-tab-item>
     </mt-tabbar>
@@ -15,9 +15,10 @@ import Field from "@/components/Field/index";
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
 export default {
+  name: "录入需求单",
   data() {
     return {
-      selected: "recordDemand"
+      selected: "demandList"
     };
   },
   methods: {
@@ -32,3 +33,11 @@ export default {
   }
 };
 </script>
+<style>
+.tab-container .mint-tabbar.is-fixed .mint-tab-item-label {
+  color: inherit;
+  font-size: 12px;
+  height: 32px !important;
+  line-height: 32px !important;
+}
+</style>

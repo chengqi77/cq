@@ -1,7 +1,7 @@
 <template>
-  <div class="page-tabbar">
+  <div class="tab-container">
     <DemandCard></DemandCard>
-     <mt-tabbar value="selected" @input="handleChange" fixed>
+    <mt-tabbar :value="selected" @input="handleChange" fixed>
       <mt-tab-item id="recordDemand">录单</mt-tab-item>
       <mt-tab-item id="demandList">查看</mt-tab-item>
     </mt-tabbar>
@@ -33,34 +33,7 @@ export default {
 };
 </script>
 <style>
-.page-tabbar .mint-tabbar.is-fixed .mint-tab-item-label {
-  color: inherit;
-  font-size: 12px;
-  height: 32px !important;
-  line-height: 32px !important;
-}
-</style>
-<style scoped>
-* {
-  margin: 0px;
-  padding: 0px;
-}
-
-.page-tabbar .mint-header {
-  background-color: #ffffff !important;
-  color: #3e3e3e !important;
-}
-
-.mint-tabbar.is-fixed {
-  right: 0;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  height: 32px !important;
-  z-index: 1;
-}
-
-.mint-tabbar.is-fixed .mint-tab-item-label {
+.tab-container .mint-tabbar.is-fixed .mint-tab-item-label {
   color: inherit;
   font-size: 12px;
   height: 32px !important;

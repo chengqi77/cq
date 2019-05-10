@@ -1,12 +1,11 @@
 <template>
     <div class="search">
         <div class="searchTit">
-            <mt-search v-model="number" placeholder="需求单编号" >
+            <mt-search v-model="number" placeholder="需求单编号">
                 <div class="searchcon">
-                    <ul>
-                        <li class="searchconTit">
-                            <span>465</span>
-                            <span>465</span>
+                    <ul class="searchconList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+                        <li class="searchconTit" v-for="item in result">
+                            <span>{{item.serialNumber}}</span>
                         </li>
                     </ul>
                 </div>
@@ -17,28 +16,46 @@
     </div>
 </template>
 <script>
-    import { Search } from 'mint-ui';
-    import {serialNumber} from "@/service/getData.js"
+    import { Search, InfiniteScroll } from 'mint-ui';
+    import { serialNumber } from "@/service/getData.js"
     export default {
         data() {
             return {
                 number: '',
                 result: [
-                    {
-                        title: "66",
-                        value: "66"
-                    }
+
                 ],
             }
         },
         created() {
-            this.getserialNumber()
+            //this.getserialNumber()
+        },
+        watch: {
+            number() {
+                this.search(1)
+            }
         },
         methods: {
-            getserialNumber(){
-                let serialNumbers = this.number
-                serialNumber(serialNumbers).then(res=>{
-                console.log(res)
+            loadMore() {
+                this.loading = true;
+               // console.log('---', this.loading)
+                setTimeout(() => {
+                    this.search(2);
+                    this.loading = false;
+                }, 2500);
+            },
+            search(index) {
+                let serialNumbers = {
+                    serialNumber: this.number,
+                    pageNo: index,
+                    pageSise: 30,
+                }
+                serialNumber(serialNumbers).then(res => {
+                    if (res) {
+                        if(index)
+                        this.result = res.data
+                    }
+
                 })
             }
         },
@@ -57,6 +74,11 @@
         list-style: none;
         margin: 0px;
         padding: 0px;
+    }
+
+    .searchconList {
+        height: 500px;
+        overflow-x: scroll
     }
 
     .mint-searchbar-core {
@@ -90,8 +112,8 @@
         margin: 0 auto;
         margin-top: 15px;
         .searchconTit {
-            height: 30px;
-            line-height: 30px;
+            height: 40px;
+            line-height: 40px;
             border-bottom: 1px solid #d8d8d8;
             text-align: left;
         }

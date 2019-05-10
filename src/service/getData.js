@@ -10,7 +10,7 @@ export const demandCardSave = (data) => post('/demandCard/save', data);
 export const getById = (id) => fetch(`/demandCard/getById?id=${id}`);
 // http://127.0.0.1:8082/out-user-sys-background
 //需求号搜索
-export const serialNumber = (id) => fetch(`/demandCard/getSerialNums?serialNumber=${id}`);
+export const serialNumber = (data) => fetch('/demandCard/getSerialNums',data);
 
 export const getmemberAccount = (data) => fetch('member/find/agent/account', data);
 

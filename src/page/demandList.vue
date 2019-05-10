@@ -1,6 +1,6 @@
 <template>
   <div class="tab-container">
-    <DemandCard :data="damandList" :onRequestUpdateData="getDemandList"></DemandCard>
+    <ListWrapper :requestData="getDataByCurrent"/>
     <mt-tabbar :value="selected" @input="handleChange" fixed>
       <mt-tab-item id="recordDemand">录单</mt-tab-item>
       <mt-tab-item id="demandList">查看</mt-tab-item>
@@ -12,6 +12,7 @@ import Vue from "vue";
 import { getDemandList } from "../service/getData.js";
 import { Toast, TabItem, Tabbar } from "mint-ui";
 import DemandCard from "@/components/demandCard/index.vue";
+import ListWrapper from "@/components/listWrapper.vue";
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
 export default {
@@ -29,6 +30,16 @@ export default {
     this.getDemandList();
   },
   methods: {
+    getDataByCurrent({ current }) {
+      const n = 20;
+      const data = [];
+      for (let i = 0; i < n; i++) {
+        data.push(current);
+      }
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000, data);
+      });
+    },
     handleChange(path) {
       this.$router.push({
         path
@@ -39,9 +50,9 @@ export default {
       getDemandList()
         .then(res => {
           this.damandList = {
-              status: "success",
-              list: res.data
-            };
+            status: "success",
+            list: res.data
+          };
         })
         .catch(e => {
           console.log(e, "e");
@@ -54,7 +65,8 @@ export default {
     }
   },
   components: {
-    DemandCard
+    DemandCard,
+    ListWrapper
   }
 };
 </script>

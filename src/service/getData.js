@@ -16,3 +16,6 @@ export const getmemberAccount = (data) => fetch('member/find/agent/account', dat
 
 //获取需求列表
 export const getDemandList = (params) => fetch('demandCard/getList', params);
+
+//获取用户列表
+export const getUserList = (params) => fetch('user/getUserList', params);

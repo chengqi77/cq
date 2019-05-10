@@ -4,9 +4,9 @@
       <input type="text" class="ser" placeholder="搜索需求单" @click="onchange">
     </div>
     <div>
-        <div v-show="showCustomLoading" class="mint-loadmore-top custom-loading">
-          <span>加载中...</span>
-        </div>
+      <div v-show="showCustomLoading" class="mint-loadmore-top custom-loading">
+        <span>加载中...</span>
+      </div>
       <mt-loadmore
         ref="loadmore"
         :top-method="onRequestUpdateData"
@@ -14,7 +14,7 @@
         class="loadmore-box"
       >
         <ul>
-          <li v-for="item in data.list" @click="details(item)" :key="item.id">
+          <li v-for="item in data.list" @click="goDetail(item)" :key="item.id">
             <div class="Cardbox">
               <p class="title">需求编号：{{item.serialNumber}}</p>
               <div class="creatorDeptName">
@@ -27,11 +27,11 @@
               </div>
               <div class="carddea">
                 <span>业务单位/部门:</span>
-                <span class="content" v-html="item.deptName"></span>
+                <span class="content">{{delBrTag(item.deptName)}}</span>
               </div>
               <div class="carddea">
-                <span>沟通内推:</span>
-                <span class="content">{{item.linkUpContent}}</span>
+                <span>沟通内容:</span>
+                <span class="content">{{delHtmlTag(item.linkUpContent)}}</span>
               </div>
               <div class="carddea">
                 <span>是否分派:</span>
@@ -45,7 +45,6 @@
           <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
           <span v-show="showLoading">加载中...</span>
         </div>
-        
       </mt-loadmore>
     </div>
   </div>
@@ -58,6 +57,7 @@
 4.所以第一次获取数据时 显示自定义loading
 */
 import { Loadmore } from "mint-ui";
+import { delHtmlTag, delBrTag } from "@/utils";
 export default {
   props: ["data", "onRequestUpdateData"],
   data() {
@@ -95,8 +95,10 @@ export default {
     }
   },
   methods: {
-    details(id) {
-      this.$router.push({ path: "/DemandDetails?id=" + id.P });
+    delBrTag,
+    delHtmlTag,
+    goDetail(item) {
+      this.$router.push({ path: "/DemandDetails?id=" + item.id });
     },
     handleTopChange(status) {
       this.topStatus = status;
@@ -114,8 +116,8 @@ export default {
   width: 94%;
   height: 100%;
   margin: 0px auto;
-  .custom-loading{
-      margin-top: 20px;
+  .custom-loading {
+    margin-top: 20px;
   }
   .loadmore-box {
     min-height: 200px;

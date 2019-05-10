@@ -18,7 +18,7 @@
             <div class="Cardbox">
               <p class="title">需求编号：{{item.serialNumber}}</p>
               <div class="creatorDeptName">
-                <div class="logo">{{item.creatorName || 'Unkonw'}}</div>
+                <div class="logo">{{item.userName || 'Unkonw'}}</div>
                 <div class="userpre">
                   <p>{{item.creatorName|| 'Unkonw'}}的需求单</p>
                   <p>{{item.creatorDeptName|| 'Unkonw'}}</p>

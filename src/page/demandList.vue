@@ -1,6 +1,6 @@
 <template>
   <div class="tab-container">
-    <DemandCard :data="damandList"></DemandCard>
+    <DemandCard :data="damandList" :onRequestUpdateData="getDemandList"></DemandCard>
     <mt-tabbar :value="selected" @input="handleChange" fixed>
       <mt-tab-item id="recordDemand">录单</mt-tab-item>
       <mt-tab-item id="demandList">查看</mt-tab-item>
@@ -38,16 +38,19 @@ export default {
       this.damandList.status = "loading";
       getDemandList()
         .then(res => {
-          this.damandList = {
-            status: "success",
-            list: res.data
-          };
-          console.log(res, "res");
+          setTimeout(() => {
+            this.damandList = {
+              status: "success",
+              list: res.data
+            };
+          }, 1000);
         })
         .catch(e => {
+          console.log(e, "e");
           this.damandList = {
             status: "error",
-            data: res.data
+            data: [],
+            msg: "error"
           };
         });
     }
@@ -58,8 +61,10 @@ export default {
 };
 </script>
 <style>
-.tab-container{
-    padding-bottom: 44px;
+.tab-container {
+  box-sizing: border-box;
+  height: 100%;
+  padding-bottom: 44px;
 }
 .tab-container .mint-tabbar.is-fixed .mint-tab-item-label {
   color: inherit;

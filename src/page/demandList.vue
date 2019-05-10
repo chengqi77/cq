@@ -14,7 +14,6 @@ import DemandCard from "@/components/demandCard/index.vue";
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
 export default {
-  name: "查看需求单",
   data() {
     return {
       selected: "recordDemand"

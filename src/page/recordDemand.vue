@@ -15,7 +15,6 @@ import Field from "@/components/Field/index";
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
 export default {
-  name: "录入需求单",
   data() {
     return {
       selected: "demandList"

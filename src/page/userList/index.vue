@@ -27,7 +27,7 @@
           <Checked :checked="selectList.includes(item.userName)"/>
           <p class="label">{{item.userName}}</p>
         </li>
-        <li v-show="searchValue && filterSelectedList.length === 0" class="no-data"> 暂无符合条件的用户</li>
+        <li v-show="searchValue && filterSelectedList.length === 0" class="no-data">暂无符合条件的用户</li>
       </ul>
     </ListWrapper>
     <div class="fixed-tool">
@@ -119,6 +119,8 @@ export default {
   overflow: hidden;
 }
 .header {
+  overflow: hidden;
+  background: #fff;
   .search-box {
     margin: 15px;
     height: 36px;
@@ -168,7 +170,7 @@ export default {
     border-bottom: 1px solid #f4f4f4;
   }
 }
-.no-data{
+.no-data {
   padding: 15px;
   text-align: center;
 }

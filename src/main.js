@@ -4,8 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Mint from 'mint-ui'
+import Vuex from 'vuex'
+
 
 import 'mint-ui/lib/style.css' // mint-ui css
+
 
 Vue.use(Mint);
 
@@ -19,10 +22,26 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+Vue.use(Vuex);
+const store = new Vuex.Store({
+  state: {
+    selectedUseList: []
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    },
+    setSelectedUseList(state,v) {
+      state.selectedUseList = v;
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

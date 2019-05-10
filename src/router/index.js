@@ -4,6 +4,11 @@ import HelloWorld from '@/components/HelloWorld'
 import index from '@/page/home/index'
 import RecordDemand from '../page/recordDemand.vue'
 import DemandList from '../page/demandList.vue'
+import UserList from '../page/userList/index.vue'
+import search from '@/page/search/index'
+import DemandDetails from '@/page/DemandDetails/index'
+import selectUser from '@/page/selectUser/index'
+import filterJournal from '@/page/filterJournal/index'
 
 
 //filterJournal
@@ -25,6 +30,11 @@ export default new Router({
       path: '/demandList',
       name: '查看需求单',
       component: DemandList,
+    },
+    {
+      path: '/userList',
+      name: '查看需求单',
+      component: UserList
     },
     {
       path: '/search',

@@ -5,7 +5,7 @@ import index from '@/page/home/index'
 import RecordDemand from '../page/recordDemand.vue'
 import DemandList from '../page/demandList.vue'
 import UserList from '../page/userList/index.vue'
-import search from '@/page/search/index'
+
 import DemandDetails from '@/page/DemandDetails/index'
 import selectUser from '@/page/selectUser/index'
 import filterJournal from '@/page/filterJournal/index'
@@ -36,13 +36,7 @@ export default new Router({
       name: '查看需求单',
       component: UserList
     },
-    {
-      path: '/search',
-      name: 'search',
-      component: resolve => {
-        require(['@/page/search/index'], resolve);
-      }
-    },
+   
     {
       path: '/DemandDetails',
       name: 'DemandDetails',
@@ -65,10 +59,10 @@ export default new Router({
       }
     },
     {
-      path: '/screen',
-      name: 'screen',
+      path: '/searchList',
+      name: 'searchList',
       component: resolve => {
-        require(['@/page/screen/index'], resolve);
+        require(['@/page/searchList/index.vue'], resolve);
       }
     },
   ]

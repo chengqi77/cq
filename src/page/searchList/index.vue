@@ -38,7 +38,7 @@
           <span>结束时间</span>
           <span>{{endTimeStr}}</span>
         </div>
-        <mt-datetime-picker @confirm="handleConfirm" ref="pickers" type="datetime"></mt-datetime-picker>
+        <mt-datetime-picker  :startDate="startendTime"  @confirm="handleConfirm" ref="pickers" type="datetime"></mt-datetime-picker>
         <mt-datetime-picker
           :startDate="startTime"
           @confirm="handleEndConfirm"
@@ -140,6 +140,9 @@ export default {
       return this.endTimeStampState
         ? moment(this.endTimeStampState).format("YYYY年MM月DD日 HH:mm:ss")
         : "请选择>";
+    },
+    startendTime(){
+      return  new Date();
     },
     startTime() {
       return this.startTimeStampState

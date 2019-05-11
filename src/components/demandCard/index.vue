@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div @click="goSearchList" class="search-box">
-      <input :value="searchValue" type="text" placeholder="搜索需求单">
+      <input  type="text" placeholder="搜索需求单">
     </div>
     <ListWrapper
       :requestData="getDataByCurrent.bind(this)"

@@ -107,12 +107,12 @@
         width: 100%;
         height: 100%;
         outline: 0;
-        background: #ededee;
+        background: #ededee !important;
         padding-left: 15px;
     }
 
     .mint-searchbar-inner {
-        background-color: #ededee;
+        background-color: #ededee !important;
     }
 
     .mint-searchbar {
@@ -120,7 +120,7 @@
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
-        background-color: #ffffff;
+        background-color: #ffffff !important;
     }
 
     .searchcon {

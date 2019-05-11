@@ -23,19 +23,18 @@ export default new Router({
     },
     {
       path: '/demandList',
-      name: '查看需求单',
+      name: '需求单列表',
       component: DemandList,
     },
     {
       path: '/userList',
-      name: '查看需求单',
+      name: '需求单列表',
       component: UserList
     },
    
     {
       path: '/DemandDetails',
       name: '需求单详情',
-      name: 'DemandDetails',
       component: resolve => {
         require(['@/page/DemandDetails/index'], resolve);
       }

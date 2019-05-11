@@ -1,13 +1,7 @@
 <template>
-<<<<<<< HEAD
-  <div class="demandCardList">
-    <div @click="goSearchList">
-      <input :value="searchValue" type="text" class="ser" placeholder="搜索需求单"  >
-=======
   <div class="container">
     <div @click="goSearchList" class="search-box">
       <input :value="searchValue" type="text" placeholder="搜索需求单">
->>>>>>> 076a297d280d6bc3a5810dec34844c413becb437
     </div>
     <ListWrapper
       :requestData="getDataByCurrent.bind(this)"

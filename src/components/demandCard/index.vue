@@ -153,6 +153,9 @@ export default {
     border: none;
     border-radius: 5px;
     border: 1px solid #bfbfbf;
+    input {
+      border: none !important;
+    }
   }
   .list {
     flex: 1;

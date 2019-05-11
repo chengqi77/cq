@@ -1,7 +1,7 @@
 <template>
   <div class="demandCardList">
     <div @click="goSearchList">
-      <input :value="searchValue" type="text" class="ser" placeholder="搜索需求单">
+      <input :value="searchValue" type="text" class="ser" placeholder="搜索需求单"  >
     </div>
     <ListWrapper
       :requestData="getDataByCurrent.bind(this)"

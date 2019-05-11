@@ -39,6 +39,7 @@ export default new Router({
    
     {
       path: '/DemandDetails',
+      name: '需求单详情',
       name: 'DemandDetails',
       component: resolve => {
         require(['@/page/DemandDetails/index'], resolve);
@@ -46,7 +47,7 @@ export default new Router({
     },
     {
       path: '/selectUser',
-      name: 'selectUser',
+      name: '选择人员',
       component: resolve => {
         require(['@/page/selectUser/index'], resolve);
       }
@@ -60,21 +61,21 @@ export default new Router({
     },
     {
       path: '/search',
-      name: 'search',
+      name: '搜索',
       component: resolve => {
         require(['@/page/search/index.vue'], resolve);
       }
     },
     {
       path: '/searchList',
-      name: 'searchList',
+      name: '搜索',
       component: resolve => {
         require(['@/page/searchList/index.vue'], resolve);
       }
     },
     {
       path: '/search',
-      name: 'search',
+      name: '搜索',
       component: resolve => {
         require(['@/page/search/index.vue'], resolve);
       }

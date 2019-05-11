@@ -8,6 +8,7 @@ export const demandCardSave = (data) => post('/demandCard/save', data);
 
 //需求列表详情
 export const getById = (id) => fetch(`/demandCard/getById?id=${id}`);
+
 // http://127.0.0.1:8082/out-user-sys-background
 //需求号搜索
 export const serialNumber = (data) => fetch('/demandCard/getSerialNums',data);

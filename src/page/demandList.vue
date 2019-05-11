@@ -39,7 +39,7 @@ export default {
 .tab-container {
   box-sizing: border-box;
   height: 100%;
-  padding-bottom: 44px;
+  padding-bottom: 48px;
 }
 .tab-container .mint-tabbar.is-fixed .mint-tab-item-label {
   color: inherit;

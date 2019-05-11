@@ -1,14 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import index from '@/page/home/index'
 import RecordDemand from '../page/recordDemand.vue'
 import DemandList from '../page/demandList.vue'
 import UserList from '../page/userList/index.vue'
 
-import DemandDetails from '@/page/DemandDetails/index'
-import selectUser from '@/page/selectUser/index'
-import filterJournal from '@/page/filterJournal/index'
 
 
 //filterJournal

@@ -1,13 +1,20 @@
 <template>
+<<<<<<< HEAD
   <div class="demandCardList">
     <div @click="goSearchList">
       <input :value="searchValue" type="text" class="ser" placeholder="搜索需求单"  >
+=======
+  <div class="container">
+    <div @click="goSearchList" class="search-box">
+      <input :value="searchValue" type="text" placeholder="搜索需求单">
+>>>>>>> 076a297d280d6bc3a5810dec34844c413becb437
     </div>
     <ListWrapper
       :requestData="getDataByCurrent.bind(this)"
       :onDataChange="updateList"
       :allowRefresh="true"
       :allowLoadmore="true"
+      :pageSise="20"
       ref="listWrapper"
       class="list"
     >
@@ -16,7 +23,7 @@
           <div class="Cardbox">
             <p class="title">需求编号：{{item.serialNumber}}</p>
             <div class="creatorDeptName">
-              <div class="logo">{{item.userName || 'Unkonw'}}</div>
+              <div class="logo">{{item.creatorName || 'Unkonw'}}</div>
               <div class="userpre">
                 <p>{{item.creatorName|| 'Unkonw'}}的需求单</p>
                 <p>{{item.creatorDeptName|| 'Unkonw'}}</p>
@@ -66,11 +73,16 @@ export default {
     goDetail(item) {
       this.$router.push({ path: "/DemandDetails?id=" + item.id });
     },
-    getDataByCurrent({ current }) {
-      console.log(this);
-      const {startTimeStr,endTimeStr,selectedUseList} = this;
-      const creatorIds=selectedUseList.map(user=>user.id).join(',');
-      return getDemandList({ pageNo: current, pageSise: "10",creatorIds,startTimeStr,endTimeStr }).then(res => {
+    getDataByCurrent({ current,pageSise }) {
+      const { startTimeStr, endTimeStr, selectedUseList } = this;
+      const creatorIds = selectedUseList.map(user => user.id).join(",");
+      return getDemandList({
+        pageNo: current,
+        pageSise,
+        creatorIds,
+        startTimeStr,
+        endTimeStr
+      }).then(res => {
         const { success, data, errorMsg } = res;
         if (success) {
           return Promise.resolve(data || []);
@@ -80,6 +92,7 @@ export default {
       });
     },
     updateList(list) {
+      console.log(list, "list");
       this.list = list;
     },
     goSearchList() {
@@ -135,18 +148,22 @@ export default {
   padding: 15px;
   text-align: center;
 }
-.demandCardList {
-  width: 94%;
+.container {
   height: 100%;
-  margin: 0px auto;
-  .custom-loading {
-    margin-top: 20px;
-  }
-  .loadmore-box {
-    min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  .search-box {
+    margin: 15px 5px;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid #bfbfbf;
   }
   .list {
-    padding-bottom: 50px;
+    flex: 1;
+    flex-shrink: 1;
+    padding: 0 5px;
   }
   ul {
     margin: 0px;
@@ -154,15 +171,6 @@ export default {
     padding: 0px;
   }
 
-  .ser {
-    width: 98%;
-    height: 30px;
-    line-height: 30px;
-    border: none;
-    border-radius: 5px;
-    border: 1px solid #bfbfbf;
-    padding-left: 2%;
-  }
   .Cardbox {
     text-align: left;
     border-bottom: 1px solid gainsboro;

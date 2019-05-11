@@ -3,9 +3,8 @@
     <div v-show="showCustomLoading" class="custom-loading">
       <span>加载中...</span>
     </div>
-    <mt-loadmore ref="loadmore" :top-method="refresh"
-      @top-status-change="handleTopChange" class="loadmore-box">
-      <ul  v-infinite-scroll="loadmore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+    <mt-loadmore ref="loadmore" :top-method="refresh" @top-status-change="handleTopChange" class="loadmore-box">
+      <ul v-infinite-scroll="loadmore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <slot name="list"></slot>
         <li v-show="status === 'success' && list.length ===0" class="no-data">暂无数据</li>
         <li v-show="status === 'loaded'" class="no-more">没有更多了</li>
@@ -72,10 +71,16 @@
           return;
         };
         this.status = "loading";
+
         this.requestData({ current })
           .then(res => {
+
             if (res.length === 0) {
               this.status = "loaded";
+              if (this.list.length) {
+                this.list = [];
+                this.onDataChange(this.list);
+              }
               return;
             }
             if (current === 1) {

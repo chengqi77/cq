@@ -8,9 +8,10 @@
     <div class="detailsBox">
       <p class="title">需求编号：{{demand.serialNumber}}</p>
       <div class="creatorDeptName">
-        <div class="logo">{{split(delBrTag(demand.userName),1)}}</div>
+        <div class="logo">{{split(delBrTag(demand.creatorName),2)}}</div>
         <div class="userpre">
-          <p>{{delBrTag(demand.userName)}}的需求单</p>
+          <p>{{delBrTag(demand.creatorName)}}的需求单</p>
+          <p>{{delBrTag(demand.creatorDeptName)}}</p>
           <p class="time">{{demand.createTimeStr}}</p>
         </div>
       </div>
@@ -43,6 +44,7 @@
 </template>
 <style lang="less">
 .details {
+  margin-top:10px;
   .mint-header {
     background-color: #ffffff !important;
     color: #3e3e3e !important;
@@ -56,7 +58,10 @@
     margin: 0 auto;
     text-align: left;
     .title {
+      color: #717171;
+      padding-bottom:6px;
     }
+
     .creatorDeptName {
       display: flex;
       align-items: center;

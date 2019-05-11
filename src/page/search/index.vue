@@ -5,7 +5,7 @@
                 <ListWrapper :requestData="getDataByCurrent.bind(this)" :onDataChange="updateList" :allowRefresh="true" :allowLoadmore="true"
                     ref="listWrapper" class="list">
                     <ul class="searchconList" slot="list">
-                        <li class="searchconTit" v-for="item in result" @click="go(item)">
+                        <li class="searchconTit" v-for="item in list" @click="go(item)">
                             <!-- <span>{{item.serialNumber}}</span> -->
                             <span>{{item.serialNumber.substr(0,item.serialNumber.indexOf(number))}}</span><span style="color:red">{{number}}</span><span>{{item.serialNumber.substr(item.serialNumber.indexOf(number)+number.length)}}
                             </span>
@@ -28,7 +28,7 @@
         data() {
             return {
                 number: '',
-                result:[],
+                //   result:[],
                 serialNumber: "",
                 list: [],
             }
@@ -38,13 +38,15 @@
         },
         watch: {
             number() {
-                console.log(this.list, 'this.list')
+                //  console.log(this.list, 'this.list')
                 this.$refs.listWrapper.getData(1, true);
             },
 
         },
         computed: {
-        
+            // result() {
+            //     return this.list
+            // }
 
 
         },
@@ -57,8 +59,8 @@
                 return serialNumber({ serialNumber: this.number, pageNo: current, pageSise: "10" }).then(res => {
                     const { success, data, errorMsg } = res;
                     if (success) {
-                        // console.log(res)
-                        this.result = res.data || []
+                        //   console.log(res)
+                        //  this.result = res.data || []
                         return Promise.resolve(data || []);
                     } else {
                         return Promise.reject(errorMsg);

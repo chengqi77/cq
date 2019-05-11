@@ -2,10 +2,10 @@
     <div class="search">
         <div class="searchTit">
             <mt-search v-model="number" placeholder="需求单编号">
-                <ListWrapper :requestData="getDataByCurrent.bind(this)" :onDataChange="updateList" :allowRefresh="true" :allowLoadmore="true"
+                <ListWrapper :requestData="getDataByCurrent.bind(this)" :onDataChange="updateList" :allowRefresh="true" :allowLoadmore="true" :pageSize="30"
                     ref="listWrapper" class="list">
                     <ul class="searchconList" slot="list">
-                        <li class="searchconTit" v-for="item in list" @click="go(item)">
+                        <li class="searchconTit" v-for="item in list" @click="go(item)" :key="item.serialNumber">
                             <!-- <span>{{item.serialNumber}}</span> -->
                             <span>{{item.serialNumber.substr(0,item.serialNumber.indexOf(number))}}</span><span style="color:red">{{number}}</span><span>{{item.serialNumber.substr(item.serialNumber.indexOf(number)+number.length)}}
                             </span>
@@ -54,9 +54,8 @@
             go(item) {
                 this.$router.push({ path: "/DemandDetails?id=" + item.id });
             },
-            getDataByCurrent({ current }) {
-
-                return serialNumber({ serialNumber: this.number, pageNo: current, pageSise: "10" }).then(res => {
+            getDataByCurrent({ current,pageSize }) {
+                return serialNumber({ serialNumber: this.number, pageNo: current, pageSize }).then(res => {
                     const { success, data, errorMsg } = res;
                     if (success) {
                         //   console.log(res)
@@ -95,6 +94,7 @@
         line-height: 40px;
         padding-left: 18px;
         color: #474747;
+       
     }
 
     .mint-searchbar-core {
@@ -134,5 +134,8 @@
             text-align: left;
         }
 
+    }
+    .list{
+        height: 100%;
     }
 </style>

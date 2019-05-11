@@ -2,15 +2,18 @@
     <div class="search">
         <div class="searchTit">
             <mt-search v-model="number" placeholder="需求单编号">
-                <div class="searchcon">
-                    <ul class="searchconList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-                        <li class="searchconTit" v-for="item in result">
-                            <span>{{item.serialNumber}}</span>
+                <ListWrapper :requestData="getDataByCurrent.bind(this)" :onDataChange="updateList" :allowRefresh="true" :allowLoadmore="true"
+                    ref="listWrapper" class="list">
+                    <ul class="searchconList" slot="list">
+                        <li class="searchconTit" v-for="item in list" @click="go(item)">
+                            <!-- <span>{{item.serialNumber}}</span> -->
+                            <span>{{item.serialNumber.substr(0,item.serialNumber.indexOf(number))}}</span><span style="color:red">{{number}}</span><span>{{item.serialNumber.substr(item.serialNumber.indexOf(number)+number.length)}}
+                            </span>
+
                         </li>
                     </ul>
-                </div>
+                </ListWrapper>
             </mt-search>
-        
         </div>
 
     </div>
@@ -18,13 +21,16 @@
 <script>
     import { Search, InfiniteScroll } from 'mint-ui';
     import { serialNumber } from "@/service/getData.js"
+    import { Loadmore } from "mint-ui";
+    import { delHtmlTag, delBrTag } from "@/utils";
+    import ListWrapper from "@/components/listWrapper.vue";
     export default {
         data() {
             return {
                 number: '',
-                result: [
-
-                ],
+                //   result:[],
+                serialNumber: "",
+                list: [],
             }
         },
         created() {
@@ -32,35 +38,43 @@
         },
         watch: {
             number() {
-                this.search(1)
-            }
+                //  console.log(this.list, 'this.list')
+                this.$refs.listWrapper.getData(1, true);
+            },
+
+        },
+        computed: {
+            // result() {
+            //     return this.list
+            // }
+
+
         },
         methods: {
-            loadMore() {
-                this.loading = true;
-               // console.log('---', this.loading)
-                setTimeout(() => {
-                    this.search(2);
-                    this.loading = false;
-                }, 2500);
+            go(item) {
+                this.$router.push({ path: "/DemandDetails?id=" + item.id });
             },
-            search(index) {
-                let serialNumbers = {
-                    serialNumber: this.number,
-                    pageNo: index,
-                    pageSise: 30,
-                }
-                serialNumber(serialNumbers).then(res => {
-                    if (res) {
-                        if(index)
-                        this.result = res.data
-                    }
+            getDataByCurrent({ current }) {
 
-                })
-            }
+                return serialNumber({ serialNumber: this.number, pageNo: current, pageSise: "10" }).then(res => {
+                    const { success, data, errorMsg } = res;
+                    if (success) {
+                        //   console.log(res)
+                        //  this.result = res.data || []
+                        return Promise.resolve(data || []);
+                    } else {
+                        return Promise.reject(errorMsg);
+                    }
+                });
+            },
+            updateList(list) {
+                this.list = list;
+            },
+
+
         },
         components: {
-
+            ListWrapper
         }
     }
 </script>
@@ -77,8 +91,10 @@
     }
 
     .searchconList {
-        height: 500px;
-        overflow-x: scroll
+        margin-top: 16px;
+        line-height: 40px;
+        padding-left: 18px;
+        color: #474747;
     }
 
     .mint-searchbar-core {

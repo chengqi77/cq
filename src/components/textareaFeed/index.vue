@@ -1,6 +1,7 @@
 <template>
     <div>
-        <textarea style="resize:none" class="input-item textarea-item coolscrollbar"  rows="1" ref="address"
+        <textarea style="resize:none;height: 32px;
+        line-height: 32px;" class="input-item textarea-item coolscrollbar"  rows="1" ref="address"
             v-model="texts" @focus="showClearBtn()" @blur="hideCleanBtn()" v-on:input="onchange()">
     </textarea>
     </div>

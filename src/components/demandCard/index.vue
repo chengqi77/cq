@@ -1,6 +1,6 @@
 <template>
   <div class="demandCardList">
-    <div>
+    <div @click="goSearchList">
       <input v-model="searchValue" type="text" class="ser" placeholder="搜索需求单">
     </div>
     <ListWrapper
@@ -79,6 +79,9 @@ export default {
     },
     updateList(list) {
       this.list = list;
+    },
+    goSearchList() {
+      this.$router.push({ path: "/searchList" });
     }
   },
   computed: {
@@ -110,7 +113,7 @@ export default {
   .loadmore-box {
     min-height: 200px;
   }
-  .list{
+  .list {
     padding-bottom: 50px;
   }
   ul {

@@ -18,13 +18,8 @@
       class="list"
     >
       <ul slot="list">
-        <li
-          v-for="item in filterSelectedList"
-          :key="item.id"
-          class="item"
-          @click="select(item.userName)"
-        >
-          <Checked :checked="selectList.includes(item.userName)"/>
+        <li v-for="item in filterSelectedList" :key="item.id" class="item" @click="select(item)">
+          <Checked :checked="selectList.findIndex(p=>item.userName ===p.userName)>-1"/>
           <p class="label">{{item.userName}}</p>
         </li>
         <li v-show="searchValue && filterSelectedList.length === 0" class="no-data">暂无符合条件的用户</li>
@@ -70,25 +65,25 @@ export default {
     updateList(list) {
       this.list = list;
     },
-    select(userName) {
+    select(p) {
       const { selectList } = this;
-      const i = selectList.indexOf(userName);
+      const i = selectList.findIndex(item => item.userName === p.userName);
       let nextSelectedUseList = selectList;
       if (i === -1) {
-        nextSelectedUseList.push(userName);
+        nextSelectedUseList.push(p);
       } else {
         nextSelectedUseList.splice(i, 1);
       }
     },
     submit() {
       this.$store.commit("setSelectedUseList", this.selectList);
-      this.$router.back();
+      this.$router.replace({path:'/searchList'});
     },
     toggleAllChecked() {
       if (this.isAllChecked) {
         this.selectList = [];
       } else {
-        this.selectList = this.list.map(item => item.userName);
+        this.selectList = this.list;
       }
       this.isAllChecked = !this.isAllChecked;
     }

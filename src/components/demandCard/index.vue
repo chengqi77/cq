@@ -1,10 +1,10 @@
 <template>
   <div class="demandCardList">
     <div @click="goSearchList">
-      <input v-model="searchValue" type="text" class="ser" placeholder="搜索需求单">
+      <input :value="searchValue" type="text" class="ser" placeholder="搜索需求单">
     </div>
     <ListWrapper
-      :requestData="getDataByCurrent"
+      :requestData="getDataByCurrent.bind(this)"
       :onDataChange="updateList"
       :allowRefresh="true"
       :allowLoadmore="true"
@@ -12,7 +12,7 @@
       class="list"
     >
       <ul slot="list">
-        <li v-for="item in filterSelectedList" @click="goDetail(item)" :key="item.id">
+        <li v-for="item in list" @click="goDetail(item)" :key="item.id">
           <div class="Cardbox">
             <p class="title">需求编号：{{item.serialNumber}}</p>
             <div class="creatorDeptName">
@@ -37,7 +37,6 @@
             </div>
           </div>
         </li>
-        <li v-show="searchValue && filterSelectedList.length === 0" class="no-data">暂无符合条件的需求</li>
       </ul>
     </ListWrapper>
     <div></div>
@@ -54,10 +53,10 @@ import { Loadmore } from "mint-ui";
 import { delHtmlTag, delBrTag } from "@/utils";
 import ListWrapper from "@/components/listWrapper.vue";
 import { getDemandList } from "@/service/getData.js";
+import moment from "moment";
 export default {
   data() {
     return {
-      searchValue: "",
       list: []
     };
   },
@@ -68,7 +67,10 @@ export default {
       this.$router.push({ path: "/DemandDetails?id=" + item.id });
     },
     getDataByCurrent({ current }) {
-      return getDemandList({ pageNo: current, pageSise: "10" }).then(res => {
+      console.log(this);
+      const {startTimeStr,endTimeStr,selectedUseList} = this;
+      const creatorIds=selectedUseList.map(user=>user.id).join(',');
+      return getDemandList({ pageNo: current, pageSise: "10",creatorIds,startTimeStr,endTimeStr }).then(res => {
         const { success, data, errorMsg } = res;
         if (success) {
           return Promise.resolve(data || []);
@@ -90,6 +92,36 @@ export default {
         const { serialNumber = "" } = item;
         return !serialNumber || serialNumber.includes(this.searchValue);
       });
+    },
+    searchValue() {
+      let s = [];
+      const { selectedUseList, startTimeStr, endTimeStr } = this;
+      if (selectedUseList.length) {
+        s.push(selectedUseList.length + "个发送人");
+      }
+      if (this.startTimeStr || this.endTimeStr) {
+        s.push(`${this.startTimeStr || "~"}-${this.endTimeStr || "~"}`);
+      }
+      return s.join(",");
+    },
+    selectedUseList() {
+      return this.$store.state.selectedUseList;
+    },
+    startTimeStamp() {
+      return this.$store.state.startTimeStamp;
+    },
+    startTimeStr() {
+      return this.startTimeStamp
+        ? moment(this.startTimeStamp).format("YYYY年MM月DD日 HH:mm:ss")
+        : "";
+    },
+    endTimeStamp() {
+      return this.$store.state.endTimeStamp;
+    },
+    endTimeStr() {
+      return this.endTimeStamp
+        ? moment(this.endTimeStamp).format("YYYY年MM月DD日 HH:mm:ss")
+        : "";
     }
   },
   components: {

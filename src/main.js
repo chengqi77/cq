@@ -25,14 +25,22 @@ router.beforeEach((to, from, next) => {
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
+    startTimeStamp: '',
+    endTimeStamp: '',
     selectedUseList: []
   },
   mutations: {
     increment(state) {
       state.count++
     },
-    setSelectedUseList(state,v) {
+    setSelectedUseList(state, v) {
       state.selectedUseList = v;
+    },
+    setStartTimeStamp(state, v) {
+      state.startTimeStamp = v;
+    },
+    setEndTimeStamp(state, v) {
+      state.endTimeStamp = v;
     }
   }
 })

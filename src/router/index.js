@@ -59,6 +59,13 @@ export default new Router({
       }
     },
     {
+      path: '/search',
+      name: 'search',
+      component: resolve => {
+        require(['@/page/search/index.vue'], resolve);
+      }
+    },
+    {
       path: '/searchList',
       name: 'searchList',
       component: resolve => {

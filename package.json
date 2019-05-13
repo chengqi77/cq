@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "better-scroll": "^1.15.2",
+    
     "dingtalk-jsapi": "^2.6.44",
     "loaders.css": "^0.1.2",
     "lodash": "^4.17.11",

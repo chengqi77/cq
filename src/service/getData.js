@@ -20,3 +20,6 @@ export const getDemandList = (params) => fetch('demandCard/getList', params);
 
 //获取用户列表
 export const getUserList = (params) => fetch('user/getUserList', params);
+
+//发送授权码http://60.166.38.180:15003/out-user-sys-background={{code}}
+//export const getLoginUser = (id) => fetch(`/user/getLoginUser?code=${id}`);

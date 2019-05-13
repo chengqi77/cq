@@ -17,13 +17,14 @@ export function param2Obj(url) {
     '"}'
   )
 }
-export function delHtmlTag(str='')
+export function delHtmlTag(str)
 {
+  str = str || ''
     //去掉所有的html标记
     return str.replace(/<[^>]+>/g,"");
 }
-export function delBrTag(str='')
-{
+export function delBrTag(str)
+{str = str || ''
     //去掉所有的html标记
     return str.replace(/<br(\s)*\/>/g,"");
 }

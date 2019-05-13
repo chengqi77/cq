@@ -38,6 +38,9 @@
   import textareaFeed from '@/components/textareaFeed/index'
   import Field from '@/components/Field/index'
   import demandCard from '@/components/demandCard/index.vue'
+  import * as dd from 'dingtalk-jsapi'; // 此方式为整体加载，也可按需进行加载
+
+  // import { getLoginUser } from "@/service/getData.js"
   Vue.component(Tabbar.name, Tabbar);
   Vue.component(TabItem.name, TabItem);
   export default {
@@ -49,15 +52,29 @@
       }
     },
     updated() {
-     // this.ons();
+      // this.ons();
     },
     created() {
-     this.ons();
+      this.ons();
+      // this.getterscode();
     },
     methods: {
+      // getterscode() {
+      //   dd.ready(function () {
+      //     dd.runtime.permission.requestAuthCode({
+      //       corpId: _config.corpId, // 企业id
+      //       onSuccess: function (info) {
+      //         let code = info.code // 通过该免登授权码可以获取用户身份
+      //         getLoginUser(code).then(res => {
+      //           //console.log(res, '')
+      //         })
+      //       }
+      //     });
+      //   });
+      // },
       ons() {
         let id = this.$route.fullPath
-        console.log(id,'++')
+        console.log(id, '++')
         if (id = '/?1') {
           this.selected = '订单';
         }

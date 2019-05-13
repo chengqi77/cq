@@ -14,6 +14,8 @@
     <ListWrapper
       :requestData="getDataByCurrent"
       :onDataChange="updateList"
+      :pageSize="20"
+      :allowLoadmore="more"
       ref="listWrapper"
       class="list"
     >

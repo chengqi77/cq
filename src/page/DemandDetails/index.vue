@@ -140,7 +140,7 @@ export default {
     split,
     getdata() {
       let id = this.$route.query.id;
-      console.log(id, "+");
+      
       getById(id).then(res => {
         this.demand = res.data;
       });

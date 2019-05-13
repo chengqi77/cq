@@ -5,8 +5,9 @@ import env from '../../build/env';
 //  let developmentUrl = 'http://192.168.1.248:8082/out-user-sys-background/';
 let developmentUrl = '../..';
 let productionUrl = '../..';
-//  let productionUrl = 'http://192.168.2.222:8081/agentApi';
-//  let developmentUrl = 'http://192.168.2.222:8081/agentApi';
+// let productionUrl = 'http://192.168.1.233:8082/out-user-sys-background';
+// let developmentUrl = 'http://192.168.1.233:8082/out-user-sys-background';
+
 
 // let developmentUrl = 'http://admin.biteast.pro:8081/agentApi';
 const baseURL = {
@@ -19,4 +20,5 @@ const baseURL = {
     admin: env === 'development' ?
         developmentUrl : productionUrl
 };
+console.log(env,baseURL,'baseURL')
 export default baseURL;
